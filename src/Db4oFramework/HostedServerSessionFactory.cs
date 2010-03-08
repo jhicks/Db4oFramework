@@ -51,6 +51,7 @@ namespace Db4oFramework
                 return;
             }
 
+            _server.Close();
             _server.Dispose();
             _server = null;
         }
