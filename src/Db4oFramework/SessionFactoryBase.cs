@@ -20,8 +20,8 @@ namespace Db4oFramework
                 return;
             }
 
-            _disposed = true;
             DoDisposal();
+            _disposed = true;
         }
 
         protected virtual void DoDisposal() {}
