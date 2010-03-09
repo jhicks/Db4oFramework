@@ -20,6 +20,7 @@ namespace Db4oFramework
 
         public void Dispose()
         {
+            _objectContainer.Close();
             _objectContainer.Dispose();
         }
 
