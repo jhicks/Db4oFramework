@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using Db4objects.Db4o;
 using Db4objects.Db4o.CS;
 using NUnit.Framework;
@@ -20,19 +21,20 @@ namespace Db4oFramework.Tests
         [SetUp]
         public void SetupContext()
         {
-            DeleteFile();
             CurrentSessionContext = new ThreadStaticCurrentSessionContext();
             Server = Db4oClientServer.OpenServer(Db4oClientServer.NewServerConfiguration(), "RemoteServerTestDb.yap", Port);
             Server.GrantAccess(Username,Password);
-
             SessionFactory = new RemoteServerSessionFactory(CurrentSessionContext,Host, Port, Username, Password);
         }
 
         [TearDown]
         public void DestroyContext()
         {
+            SessionFactory.Dispose();
             Server.Close();
             Server.Dispose();
+            // we sleep here because sometimes the file isnt released
+            Thread.Sleep(1000);
             DeleteFile();
         }
 
@@ -66,6 +68,5 @@ namespace Db4oFramework.Tests
                 Assert.That(client1, Is.Not.SameAs(client2));
             }
         }
-
     }
 }
