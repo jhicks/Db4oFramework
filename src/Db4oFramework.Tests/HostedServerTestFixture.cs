@@ -13,7 +13,6 @@ namespace Db4oFramework.Tests
         [SetUp]
         public void SetupContext()
         {
-            DeleteFile();
             CurrentSessionContext = new ThreadStaticCurrentSessionContext();
             SessionFactory = new HostedServerSessionFactory(CurrentSessionContext,DbFileName);
         }
