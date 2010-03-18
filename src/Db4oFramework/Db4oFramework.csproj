@@ -47,6 +47,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +56,8 @@
     <Compile Include="Db4oSession.cs" />
     <Compile Include="DictionaryBasedCurrentSessionContextBase.cs" />
     <Compile Include="ThreadStaticCurrentSessionContext.cs" />
+    <Compile Include="TransactionalResourceManager.cs" />
+    <Compile Include="TransactionWrapper.cs" />
     <Compile Include="WebCurrentSessionContext.cs" />
     <Compile Include="ISession.cs" />
     <Compile Include="SessionFactoryBase.cs" />

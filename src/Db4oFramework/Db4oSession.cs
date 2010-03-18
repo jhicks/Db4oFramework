@@ -11,17 +11,18 @@ namespace Db4oFramework
     {
         private readonly ISessionFactory _sessionFactory;
         private readonly IObjectContainer _objectContainer;
-
+        private readonly TransactionWrapper _transactionWrapper;
+ 
         public Db4oSession(ISessionFactory sessionFactory, IObjectContainer objectContainer)
         {
             _sessionFactory = sessionFactory;
             _objectContainer = objectContainer;
+            _transactionWrapper = new TransactionWrapper(objectContainer);
         }
 
         public void Dispose()
         {
-            _objectContainer.Close();
-            _objectContainer.Dispose();
+            _transactionWrapper.Close();
         }
 
         public void Activate(object obj, int depth)
@@ -31,12 +32,13 @@ namespace Db4oFramework
 
         public bool Close()
         {
-            return _objectContainer.Close();
+            _transactionWrapper.Close();
+            return true;
         }
 
         public void Commit()
         {
-            _objectContainer.Commit();
+            _transactionWrapper.Commit();
         }
 
         public void Deactivate(object obj, int depth)
@@ -92,7 +94,7 @@ namespace Db4oFramework
 
         public void Rollback()
         {
-            _objectContainer.Rollback();
+            _transactionWrapper.Rollback();
         }
 
         [Obsolete("Use Store")]
