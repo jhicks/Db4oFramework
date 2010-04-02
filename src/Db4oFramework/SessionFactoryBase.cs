@@ -38,6 +38,18 @@ namespace Db4oFramework
             return _currentSessionContext.GetCurrentSession(this);
         }
 
+        public bool TryGetCurrentSession(out ISession session)
+        {
+            if(!_currentSessionContext.HasBoundSession(this))
+            {
+                session = null;
+                return false;
+            }
+
+            session = _currentSessionContext.GetCurrentSession(this);
+            return true;
+        }
+
         public void Bind(ISession session)
         {
             _currentSessionContext.BindSession(session);
